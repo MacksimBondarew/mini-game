@@ -1,9 +1,12 @@
-import { Button } from "@/shared/ui/button";
+import { GamesList } from "@/features/games-list/server";
+import { prisma } from "@/shared/lib/db";
 
-export default function Home() {
-  return (
-    <div>
-      <Button variant={"destructive"}>Hello</Button>
-    </div>
-  );
+export default async function Home() {
+    const games = prisma.game.findMany();
+    console.log(games);
+    return (
+        <div>
+            <GamesList />
+        </div>
+    );
 }
