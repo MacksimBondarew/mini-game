@@ -1,11 +1,9 @@
 import { GamesList } from "@/features/games-list/server";
-import { prisma } from "@/shared/lib/db";
 
 export default async function Home() {
-    const games = prisma.game.findMany();
-    console.log(games);
     return (
-        <div>
+        <div className="flex flex-col gap-8 container px-3 mx-auto pt-24">
+            <h1 className="text-3xl font-bold">Games</h1>
             <GamesList />
         </div>
     );
