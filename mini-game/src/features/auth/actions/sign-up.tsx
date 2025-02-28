@@ -5,7 +5,7 @@ import { left } from "@/shared/lib/either";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 const formDataSchema = z.object({
-    login: z.string().min(3),
+    login: z.string().email(),
     password: z.string().min(3),
 });
 

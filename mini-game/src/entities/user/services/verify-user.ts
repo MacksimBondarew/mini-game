@@ -7,7 +7,7 @@ export async function verifyUser({ login, password }: { login: string, password:
     if (!user) {
         return left("login-or-password-incorrect" as const)
     }
-    const isCompare = passwordService.comparePasswords({
+    const isCompare = await passwordService.comparePasswords({
         hash: user.passwordHash,
         salt: user.salt,
         password,
