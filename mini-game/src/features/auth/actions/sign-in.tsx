@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser, sessionService } from "@/entities/user/server";
+import { sessionService, verifyUser } from "@/entities/user/server";
 import { left } from "@/shared/lib/either";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -9,7 +9,7 @@ const formDataSchema = z.object({
     password: z.string().min(3),
 });
 
-export async function signUpAction(state: unknown, formData: FormData) {
+export async function signInAction(state: unknown, formData: FormData) {
     const login = formData.get("email");
     const password = formData.get("password");
 
@@ -18,10 +18,10 @@ export async function signUpAction(state: unknown, formData: FormData) {
     if (!validationResult.success) {
         return left("error-form-data" as const);
     }
-    const createUserResult = await createUser(validationResult.data);
-    if (createUserResult.type === "right") {
-        await sessionService.addSession(createUserResult.value);
+    const verifyUserResult = await verifyUser(validationResult.data);
+    if (verifyUserResult.type === "right") {
+        await sessionService.addSession(verifyUserResult.value);
         redirect("/");
     }
-    return left("login-allready-taken" as const);
+    return left("invalid-form-data" as const);
 }

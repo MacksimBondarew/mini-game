@@ -14,10 +14,16 @@ export function SignUpForm() {
         signUpAction,
         right(undefined)
     );
-    console.log(formState);
-    const formStateErrors = mapLeft(formState, (e) => ({
-        ['login-allready-taken']: "User is already existing",
-    })[e] || "Unknown error");
+    const formStateErrors = mapLeft(formState, (e) =>
+        ({
+            "login-allready-taken": "User is already existing",
+            "invalid-form-data": "Please enter only string values",
+            "error-form-data": [
+                "Invalid form data. Please check your input.",
+                "Only string values are allowed",
+            ].join("\n"),
+        }[e] || "An unknown error occurred. Please try again.")
+    );    
     return (
         <AuthFormLayout
             title="Sign up"

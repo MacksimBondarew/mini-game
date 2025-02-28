@@ -1,19 +1,38 @@
+"use client";
+
 import { AuthFormLayout } from "../ui/auth-form-layout";
 import { AuthFields } from "../ui/fields";
 import { SubmitButton } from "../ui/submit-button";
 import { BottomLink } from "../ui/bottom-link";
+import { signInAction } from "../actions/sign-in";
+import { mapLeft, right } from "@/shared/lib/either";
+import { ErrorMessage } from "../ui/error-message";
+import { useActionState } from "@/shared/lib/react";
 
 export function SignInForm() {
-    async function signUp(formData: FormData) {
-        "use server";
-        console.log(formData)
-    }
+    const [formState, action, isPending] = useActionState(
+        signInAction,
+        right(undefined)
+    );
+    const formStateErrors = mapLeft(
+        formState,
+        (e) =>
+            ({
+                "login-or-password-incorrect": "login or password incorrect",
+                "invalid-form-data": "Please enter only string values",
+                "error-form-data": [
+                    "Invalid form data. Please check your input.",
+                    "Only string values are allowed",
+                ].join("\n"),
+            }[e] || "An unknown error occurred. Please try again.")
+    );
     return (
         <AuthFormLayout
             title="Sign in"
-            action={signUp}
+            action={action}
             fields={<AuthFields />}
-            actions={<SubmitButton>Sign up</SubmitButton>}
+            error={<ErrorMessage error={formStateErrors} />}
+            actions={<SubmitButton isPending={isPending}>Sign up</SubmitButton>}
             link={
                 <BottomLink
                     linkText="Sign up"

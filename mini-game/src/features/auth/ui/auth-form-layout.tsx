@@ -18,7 +18,7 @@ export function AuthFormLayout({
     fields: React.ReactNode;
     actions: React.ReactNode;
     link: React.ReactNode;
-    error?: React.ReactNode;
+    error?: React.ReactNode; 
     action: ((formData: FormData) => void | void);
 }) {
     return (
