@@ -15,6 +15,5 @@ export async function verifyUser({ login, password }: { login: string, password:
     if (!isCompare) {
         return left("login-or-password-incorrect" as const)
     }
-    console.log(user)
     return right(user);
 }
