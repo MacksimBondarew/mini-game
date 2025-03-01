@@ -14,7 +14,7 @@ export default async function PrivateLayout({
 
     return (
         <div className="flex flex-col grow">
-            <header className="px-10 py-4 flex flex-row gap-4 justify-between border-b border-b-primary/50 items-center">
+            <header className="px-10 py-3 flex flex-row gap-4 justify-between border-b border-b-primary/50 items-center">
                 <div className="text-xl">tik-tak-toe</div>
                 <div className="flex gap-4 items-center">
                     <div className="text-lg">{session.login}</div>
