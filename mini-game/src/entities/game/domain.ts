@@ -10,6 +10,7 @@ export type GameIdleEntity = {
     id: GameId;
     creator: PlayerEntity;
     status: "idle";
+    field: FieldEntity;
 }
 
 export type GameInProgressEntity = {
@@ -38,3 +39,19 @@ export type FieldEntity = (GameSymbolEntity | null)[];
 export type GameSymbolEntity = string;
 
 export type GameEntity = GameIdleEntity | GameInProgressEntity | GameOverEntity | GameOverDrawEntity;
+
+export const GameSymbol = {
+    X: "X",
+    O: "O",
+}
+
+export const getGameCurrentStep = (game: GameInProgressEntity | GameOverDrawEntity | GameOverEntity) => {
+    const symbols = game.field.filter(s => s !== null).length;
+    return symbols % 2 === 0 ? GameSymbol.X : GameSymbol.O;
+};
+export const getNextSymbol = (sameSymbol: GameSymbolEntity) => {
+    if (sameSymbol === GameSymbol.X) {
+        return GameSymbol.O;
+    }
+    return GameSymbol.X;
+}

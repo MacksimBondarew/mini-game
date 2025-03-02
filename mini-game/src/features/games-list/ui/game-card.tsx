@@ -1,11 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/shared/ui/card";
 
 export async function GameCard({
     login,
     rating,
+    actions
 }: {
     login: string;
     rating: number;
+    actions: React.ReactNode;
 }) {
     return (
         <Card>
@@ -17,6 +19,7 @@ export async function GameCard({
             <CardContent>
                 <p>Rating: {rating}</p>
             </CardContent>
+            <CardFooter>{actions}</CardFooter>
         </Card>
     );
 }

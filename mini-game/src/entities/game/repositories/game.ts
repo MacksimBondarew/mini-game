@@ -1,10 +1,29 @@
 import { prisma } from "@/shared/lib/db";
-import { GameEntity, GameIdleEntity, GameOverEntity } from "../domain";
+import {
+    GameEntity,
+    GameIdleEntity,
+    GameOverEntity,
+    PlayerEntity,
+} from "../domain";
 import { Game, Prisma, User } from "@prisma/client";
 import { z } from "zod";
 import { removePassword } from "@/shared/lib/password";
 
 const fieldSchema = z.array(z.union([z.string(), z.null()]));
+
+async function getGameById(where?: Prisma.GameWhereInput) {
+    const game = await prisma.game.findFirst({
+        where,
+        include: {
+            winner: true,
+            players: true,
+        },
+    });
+    if (game) {
+        return dbGameToGameEntity(game);
+    }
+    return undefined;
+}
 
 function dbGameToGameEntity(
     game: Game & {
@@ -23,6 +42,7 @@ function dbGameToGameEntity(
                 id: game.id,
                 creator: removePassword(creator),
                 status: game.status,
+                field: fieldSchema.parse(game.field),
             } satisfies GameIdleEntity;
         }
         case "inProgress":
@@ -64,20 +84,44 @@ async function createGame(game: GameIdleEntity): Promise<GameEntity> {
         data: {
             status: game.status,
             id: game.id,
-            field: Array(9).fill(null),
+            field: game.field,
             players: {
                 connect: { id: game.creator.id },
-            }
+            },
         },
         include: {
             players: true,
-            winner: true
-        }
+            winner: true,
+        },
     });
     return dbGameToGameEntity(createdGame);
 }
 
+async function startGame(gameId: string, player: PlayerEntity) {
+    return dbGameToGameEntity(
+        await prisma.game.update({
+            where: {
+                id: gameId,
+            },
+            data: {
+                players: {
+                    connect: {
+                        id: player.id,
+                    },
+                },
+                status: "inProgress",
+            },
+            include: {
+                winner: true,
+                players: true,
+            },
+        })
+    );
+}
+
 export const gameRepository = {
     gamesList,
-    createGame
+    createGame,
+    getGameById,
+    startGame,
 };

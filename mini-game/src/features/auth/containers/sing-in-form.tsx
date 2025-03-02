@@ -8,6 +8,7 @@ import { signInAction } from "../actions/sign-in";
 import { mapLeft, right } from "@/shared/lib/either";
 import { ErrorMessage } from "../ui/error-message";
 import { useActionState } from "@/shared/lib/react";
+import { routes } from "@/kernel/routes";
 
 export function SignInForm() {
     const [formState, action, isPending] = useActionState(
@@ -32,12 +33,12 @@ export function SignInForm() {
             action={action}
             fields={<AuthFields />}
             error={<ErrorMessage error={formStateErrors} />}
-            actions={<SubmitButton isPending={isPending}>Sign up</SubmitButton>}
+            actions={<SubmitButton isPending={isPending}>Sign in</SubmitButton>}
             link={
                 <BottomLink
                     linkText="Sign up"
                     text="Don't have an account?"
-                    url="/sign-up"
+                    url={routes.signUp()}
                 />
             }
         />
