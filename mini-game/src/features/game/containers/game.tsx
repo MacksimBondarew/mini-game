@@ -3,6 +3,7 @@ import { GameClient } from "./game-client";
 import { startGame } from "@/entities/game/server";
 import { getGameById } from "@/entities/game/services/get-game";
 import { redirect } from "next/navigation";
+import { gameEvents } from "../services/game-event";
 
 export async function Game({ gameId }: { gameId: string }) {
     const user = await getCurrentUser();
@@ -16,6 +17,7 @@ export async function Game({ gameId }: { gameId: string }) {
 
         if (startGameResult.type === "right") {
             game = await startGameResult.value;
+            gameEvents.emit({ type: "game-changed", data: game }); 
         }
     }
     return <GameClient defaultGame={game} />;

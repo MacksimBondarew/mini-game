@@ -27,14 +27,17 @@ async function decrypt(session: string | undefined = "") {
 }
 
 async function addSession(user: UserEntity) {
+    if (!process.env.SESSION_SECRET) {
+        throw new Error("SESSION_SECRET is not defined in .env");
+    }
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const sessionData = userToSession(user, expiresAt.toISOString());
     const session = await encrypt(sessionData);
-    const cookiesStore = await cookies();
+    const cookiesStore = await cookies(); 
 
     cookiesStore.set("session", session, {
         httpOnly: true,
-        // secure: true,
+        secure: process.env.NODE_ENV === "production", 
         expires: expiresAt,
         sameSite: "lax",
         path: "/",
