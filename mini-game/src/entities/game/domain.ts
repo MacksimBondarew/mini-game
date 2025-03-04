@@ -55,3 +55,4 @@ export const getNextSymbol = (sameSymbol: GameSymbolEntity) => {
     }
     return GameSymbol.X;
 }
+

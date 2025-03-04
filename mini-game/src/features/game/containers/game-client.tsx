@@ -10,7 +10,11 @@ import { GameEntity } from "@/entities/game";
 export function GameClient({ defaultGame }: { defaultGame: GameEntity }) {
     const { data: game = defaultGame } = useGame(defaultGame.id);
     if (!game) {
-        return <div>Loading game...</div>
+        return (
+            <div className="text-gray-400 text-center text-lg">
+                Loading game...
+            </div>
+        );
     }
     return (
         <GameLayout

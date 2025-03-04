@@ -3,7 +3,7 @@ import { PlayerEntity } from "../domain";
 import { gameRepository } from "../repositories/game";
 
 export async function startGame(gameId: string, player: PlayerEntity) {
-    const game = await gameRepository.getGameById({ id: gameId });
+    const game = await gameRepository.getGame({ id: gameId });
     if (!game) {
         return left("game not found");
     }
