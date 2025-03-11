@@ -85,7 +85,7 @@ async function saveGame(
                       where: { userId: game.winner.id },
                   })
                   .then((p) => p.id)
-            : undefined;
+            : null;
 
     return dbGameToGameEntity(
         await prisma.game.update({
