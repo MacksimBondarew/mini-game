@@ -9,7 +9,6 @@ import {
 } from "../domain";
 import { Game, GamePlayer, Prisma, User } from "@prisma/client";
 import { z } from "zod";
-import { GameId } from "@/kernel/ids";
 
 const gameInclude = {
     winner: { include: { user: true } },
@@ -27,14 +26,13 @@ async function gamesList(where?: Prisma.GameWhereInput): Promise<GameEntity[]> {
     return games.map(dbGameToGameEntity);
 }
 
-async function startGame(gameId: GameId, player: PlayerEntity) {
+async function startGame(gameId: string, player: PlayerEntity) {
     return dbGameToGameEntity(
         await prisma.game.update({
             where: { id: gameId },
             data: {
                 players: {
                     create: {
-                        id: gameId,
                         userId: player.id,
                         index: 1,
                     },
@@ -65,7 +63,6 @@ async function createGame(game: GameIdleEntity): Promise<GameEntity> {
             field: game.field,
             players: {
                 create: {
-                    id: game.id, 
                     index: 0,
                     userId: game.creator.id,
                 },
