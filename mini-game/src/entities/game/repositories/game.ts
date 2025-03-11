@@ -104,13 +104,13 @@ const fieldSchema = z.array(z.union([z.string(), z.null()]));
 
 function dbGameToGameEntity(
     game: Game & {
-        players: Array<GamePlayer & { user: User }>;
+        players?: Array<GamePlayer & { user: User }>;
         winner?: (GamePlayer & { user: User }) | null;
     }
 ): GameEntity {
     const players = game.players
-        .sort((a, b) => a.index - b.index)
-        .map(dbPlayerToPlayer);
+        ? game.players.sort((a, b) => a.index - b.index).map(dbPlayerToPlayer)
+        : [];
 
     switch (game.status) {
         case "idle": {
