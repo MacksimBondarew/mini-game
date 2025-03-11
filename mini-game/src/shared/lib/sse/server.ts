@@ -4,11 +4,13 @@ export const sseStream = (req: NextRequest) => {
     const responseStream = new TransformStream();
     const writer = responseStream.writable.getWriter();
     const encoder = new TextEncoder();
+
     const write = (data: unknown) =>
         writer.write(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
-    const addCloseListener = (onDisconnect: () => void) =>
-        req.signal.addEventListener("abort", () => {
-            onDisconnect();
+
+    const addCloseListener = (onDisconnet: () => void) =>
+        void req.signal.addEventListener("abort", () => {
+            onDisconnet();
         });
 
     const response = new Response(responseStream.readable, {
@@ -18,11 +20,15 @@ export const sseStream = (req: NextRequest) => {
             "Cache-Control": "no-cache, no-transform",
         },
     });
-    const disconnect = () => writer.close();
+
+    const close = () => {
+        writer.close();
+    };
+
     return {
         response,
         write,
-        disconnect,
+        close,
         addCloseListener,
     };
 };

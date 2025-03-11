@@ -1,31 +1,33 @@
-import { GameEntity } from "@/entities/game";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export function useEventSource(url: string) {
+export function useEventsSource<T>(url: string) {
     const [isPending, setIsPending] = useState(true);
-    const [data, setData] = useState<GameEntity | null>(null);
+    const [data, setData] = useState<T>();
+    const [error, setError] = useState<unknown | undefined>();
 
     useEffect(() => {
-
         const gameEvents = new EventSource(url);
 
-        gameEvents.addEventListener("message", (event) => {
+        gameEvents.addEventListener("message", (message) => {
             try {
-                const parsedData: GameEntity = JSON.parse(event.data);
-                setData(parsedData);
                 setIsPending(false);
-            } catch (error) {
-                console.error("Error parsing SSE data:", error);
+                setError(undefined);
+                setData(JSON.parse(message.data));
+            } catch (e) {
+                setError(e);
             }
         });
 
-        return () => {
-            gameEvents.close();
-        };
+        gameEvents.addEventListener("error", (e) => {
+            setError(e);
+        });
+
+        return () => gameEvents.close();
     }, [url]);
 
     return {
-        data, 
-        isPending
+        dataStream: data,
+        error,
+        isPending,
     };
 }

@@ -7,7 +7,3 @@ export type {
     GameSymbolEntity,
     PlayerEntity,
 } from "./domain";
-export {
-    getGameCurrentStep,
-    getNextSymbol
-} from "./domain";

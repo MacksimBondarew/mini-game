@@ -1,4 +1,5 @@
-import { GameEntity, getGameCurrentStep } from "@/entities/game";
+import { GameEntity } from "@/entities/game";
+import { getGameCurrentSymbol } from "@/entities/game/domain";
 import { motion } from "framer-motion";
 
 export function GameStatus({ game }: { game: GameEntity }) {
@@ -13,7 +14,7 @@ export function GameStatus({ game }: { game: GameEntity }) {
     }
 
     if (game.status === "inProgress" || game.status === "gameOver") {
-        currentSymbol = getGameCurrentStep(game);
+        currentSymbol = getGameCurrentSymbol(game);
     }
 
     return (
@@ -58,7 +59,7 @@ export function GameStatus({ game }: { game: GameEntity }) {
                         repeat: Infinity,
                         repeatType: "reverse",
                     }}>
-                    🎉 Winner: {currentSymbol === "X" ? "❌" : "⭕"}
+                    🎉 Winner: {currentSymbol === "O" ? "❌" : "⭕"}
                 </motion.span>
             )}
 

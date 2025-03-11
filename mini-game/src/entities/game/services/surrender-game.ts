@@ -23,10 +23,7 @@ export async function surrenderGame(gameId: GameId, player: PlayerEntity) {
         status: "gameOver",
         winner: game.players.find((p) => p.id !== player.id)!,
     });
-    await gameEvents.emit({
-        type: "game-changed",
-        data: newGame,
-    });
+    await gameEvents.emit(game);
 
     return right(newGame);
 }

@@ -6,9 +6,10 @@ export class EventsChanel {
 
     async createChannel() {
         if (!connection) {
+            // @ts-expect-error ignore error from `process.env.MB_URL`
             connection = await amqplib.connect(process.env.MB_URL!);
         }
-
+        // @ts-expect-error ignore error connect to channel
         const channel = await connection.createChannel();
         await channel.assertExchange(this.channelName, "direct", {
             durable: false,
@@ -40,7 +41,7 @@ export class EventsChanel {
 
         const queue = await channel.assertQueue("", { exclusive: true });
         await channel.bindQueue(queue.queue, this.channelName, key);
-
+        // @ts-expect-error ignore data type
         const consumer = await channel.consume(queue.queue, async (data) => {
             await listener(JSON.parse(data!.content.toString()));
             channel.ack(data!);

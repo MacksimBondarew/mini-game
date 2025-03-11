@@ -81,10 +81,10 @@ async function saveGame(
     const winnerId =
         game.status === "gameOver"
             ? await prisma.gamePlayer
-                .findFirstOrThrow({
-                    where: { userId: game.winner.id },
-                })
-                .then((p) => p.id)
+                  .findFirstOrThrow({
+                      where: { userId: game.winner.id },
+                  })
+                  .then((p) => p.id)
             : undefined;
 
     return dbGameToGameEntity(
