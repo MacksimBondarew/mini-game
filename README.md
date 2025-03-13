@@ -72,7 +72,7 @@ npm run dev
  ┃ ┣ 📁 features   # Core business logic (authentication, game logic)
  ┃ ┣ 📁 kernel     # Shared types and utilities
  ┃ ┣ 📁 shared     # UI components, API, SSE logic
- ┃ ┗ 📁 pages      # Next.js page routes
+ ┃ ┗ 📁 app      # Next.js page routes
  ┣ 📄 .env.example # Example .env file
  ┣ 📄 README.md    # This file
  ┗ 📄 next.config.js # Next.js configuration
