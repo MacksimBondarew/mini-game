@@ -1,113 +1,36 @@
-# 🎮 **Mini-Game: Tic-Tac-Toe Online**
-🔗 **Live Demo:** [tik-tak-toe-macksimbondarews-projects.vercel.app](https://tik-tak-toe-macksimbondarews-projects.vercel.app)  
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.1.7-blue)](https://nextjs.org/) 
-[![TypeScript](https://img.shields.io/badge/TypeScript-✔️-blue)](https://www.typescriptlang.org/) 
-[![Prisma](https://img.shields.io/badge/Prisma-✔️-blue)](https://www.prisma.io/)  
+## Getting Started
 
-🚀 **Mini-Game** is a multiplayer **Tic-Tac-Toe** game built with Next.js, featuring **real-time updates** using **Server-Sent Events (SSE)** and **RabbitMQ**.  
-It supports **authentication**, **player ranking**, and **live game updates**.
+First, run the development server:
 
----
-
-## 📌 **Core Technologies**
-- 🏗 **Frontend**: `Next.js`, `React`, `TailwindCSS`
-- ⚡ **Backend**: `Next.js API routes`
-- 🗃 **Database**: `PostgreSQL` + `Prisma ORM`
-- 📢 **Real-Time**: `Server-Sent Events (SSE)`, `RabbitMQ`
-- 🔐 **Authentication**: `Session-based authentication`
-
----
-
-## 🚀 **Features**
-✔️ **Real-time gameplay** with automatic updates  
-✔️ **User authentication and session management**  
-✔️ **Game results storage**  
-✔️ **Live updates using SSE (Server-Sent Events)**  
-✔️ **RabbitMQ integration for WebSockets**  
-
----
-
-## 📦 **Local Setup**
-### 1️⃣ **Clone the Repository**
-```bash
-git clone https://github.com/MacksimBondarew/mini-game.git
-cd mini-game
-```
-
-### 2️⃣ **Set Up Environment Variables**
-Create a `.env` file and add:
-```env
-DATABASE_URL=postgres://user:password@localhost:5432/mini-game
-POSTGRES_URL_NON_POOLING=postgres://user:password@localhost:5432/mini-game
-MB_URL=amqp://localhost
-NEXTAUTH_SECRET=your_secret
-```
-✅ *Ensure PostgreSQL and RabbitMQ are running before proceeding.*
-
-### 3️⃣ **Install Dependencies**
-```bash
-npm install
-```
-
-### 4️⃣ **Run Database Migrations**
-```bash
-npx prisma migrate dev --name init
-```
-
-### 5️⃣ **Start the Project**
 ```bash
 npm run dev
-```
-📌 *Your server will be available at `http://localhost:3000`.*
-
----
-
-## 🎯 **Project Structure**
-```
-📁 mini-game
- ┣ 📁 prisma        # Prisma database configuration
- ┣ 📁 src
- ┃ ┣ 📁 entities   # Game-related entities (Game, Player, User)
- ┃ ┣ 📁 features   # Core business logic (authentication, game logic)
- ┃ ┣ 📁 kernel     # Shared types and utilities
- ┃ ┣ 📁 shared     # UI components, API, SSE logic
- ┃ ┗ 📁 app      # Next.js page routes
- ┣ 📄 .env.example # Example .env file
- ┣ 📄 README.md    # This file
- ┗ 📄 next.config.js # Next.js configuration
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🔥 **Deploying on Vercel**
-🔗 The project is already live at: **[Mini-Game on Vercel](https://tik-tak-toe-macksimbondarews-projects.vercel.app)**  
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-To deploy your own version:
-1️⃣ **Sign up at [Vercel](https://vercel.com/)**  
-2️⃣ **Set environment variables** in Vercel (`DATABASE_URL`, `MB_URL`, `NEXTAUTH_SECRET`)  
-3️⃣ **Deploy with the command**:
-```bash
-vercel --prod
-```
-✅ **Deployment is complete!**
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-## 🤝 **Contributing**
-If you want to contribute:
-1. Fork the repository
-2. Create a new branch `git checkout -b feature-name`
-3. Make changes and commit `git commit -m "Added feature"`
-4. Submit a PR to `main` 🚀
+To learn more about Next.js, take a look at the following resources:
 
----
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## 🔗 **Resources**
-- **Live Project** → [tik-tak-toe-macksimbondarews-projects.vercel.app](https://tik-tak-toe-macksimbondarews-projects.vercel.app)  
-- **Next.js Docs** → [nextjs.org](https://nextjs.org/)  
-- **Prisma Docs** → [prisma.io](https://www.prisma.io/)  
-- **Tailwind CSS Docs** → [tailwindcss.com](https://tailwindcss.com/)  
-- **RabbitMQ Docs** → [rabbitmq.com](https://www.rabbitmq.com/)  
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-💙 Thank you for playing Mini-Game! 🎮 🚀
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
