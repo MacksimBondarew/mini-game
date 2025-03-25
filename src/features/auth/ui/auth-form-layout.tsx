@@ -27,7 +27,7 @@ export function AuthFormLayout({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex items-center justify-center w-full">
-            <Card className="w-full max-w-sm border border-gray-800 shadow-md rounded-lg relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+            <Card className="w-full py-5 max-w-sm border border-gray-800 shadow-md rounded-lg relative overflow-hidden transition-all duration-300 hover:shadow-lg">
                 <CardHeader className="relative text-center pb-4">
                     <motion.h2
                         initial={{ opacity: 0, y: -10 }}

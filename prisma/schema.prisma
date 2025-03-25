@@ -9,23 +9,32 @@ datasource db {
 }
 
 model Game {
-  id         String       @id @default(cuid())
-  status     GameStatus
-  winnerId   String?
+  id      String       @id @default(cuid())
+  status  GameStatus
+  players GamePlayer[] @relation("players")
+  field   Json?
+
+  winner     GamePlayer? @relation("winnerRelation", fields: [winnerId], references: [id])
+  winnerId   String? @unique 
   gameOverAt String?
-  field      Json?
-  winner     GamePlayer?  @relation(fields: [winnerId], references: [id])
-  players    GamePlayer[] @relation("players")
+}
+
+enum GameStatus {
+  idle
+  inProgress
+  gameOver
+  gameOverDraw
 }
 
 model GamePlayer {
   id     String @id @default(cuid())
-  index  Int
   gameId String
-  userId String
-  Game   Game[]
   game   Game   @relation("players", fields: [gameId], references: [id])
+  userId String
   user   User   @relation(fields: [userId], references: [id])
+  index  Int
+
+  winnerOf Game? @relation("winnerRelation")
 }
 
 model User {
@@ -35,11 +44,4 @@ model User {
   passwordHash String
   salt         String       @default("")
   players      GamePlayer[]
-}
-
-enum GameStatus {
-  idle
-  inProgress
-  gameOver
-  gameOverDraw
 }
